@@ -1,3 +1,8 @@
+#node stuf
+node_modules
+package-lock.json
+wip_refactor_notes.md
+
 # Logs
 logs
 *.log
