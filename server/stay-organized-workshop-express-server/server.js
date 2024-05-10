@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
+const path = require("path")
 
 const app = express();
 
@@ -21,12 +22,18 @@ app.use(express.json());
 
 // Serve static front-end files (HTML, etc.) from "./public"
 // app.use(express.static("public"));
-
+console.log(__dirname)
 
 ///////////////////////////////////////////////////////////////////////
 //   API ENDPOINTS ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+// app.get("/", function (request, response) {
+//     response.sendFile( path.join( __dirname, './../../src', 'pages/todos.html' ));
+// })
 
+// app.get("/todos.js", function(request, response) {
+//     response.sendFile( path.join(__dirname, './../../src','scripts/todos.js'))
+// })
 
 // Get all categories 
 app.get("/api/categories", function (request, response) {

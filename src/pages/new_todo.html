@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New To Do</title>
+</head>
+<body>
+    <nav id="navbar">
+        <button type="button"><a href="./index.html">Home</a></button>
+        <button type="button"><a href="./complete_todo.html">Complete a Task</a></button>
+        <button type="button"><a href="./new_user.html">New User</a></button>
+        <button type="button"><a href="./todos.html">To Dos</a></button>
+        <button type="button"><a href="./todo_details.html">To Do Details</a></button>
+        <button type="button"><a href="./new_todo.html">New To Do</a></button>
+    </nav>
+    <h1>New To Do</h1>
+    <div>
+        <form>
+            <select id="user-select">
+                <option>Select a User:</option>
+            </select>
+            <select id="category-select">
+                <option>Select a Category:</option>
+            </select>
+            <input id="description" type="text" placeholder="Enter a Description">
+            <input id="deadline" type="date" placeholder="Enter a Deadline">
+            <select>
+                <option>Pick a priority:</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <button type="button">Add To Do</button>
+        </form>
+    </div>
+
+    <script src="../scripts/newTodo.js"></script>
+</body>
+</html>
