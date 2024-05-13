@@ -213,6 +213,7 @@ app.post("/api/todos", function (request, response) {
 
     // If not all TODO data passed, reject the request
     const { userid, category, description, deadline, priority } = request.body
+
     if (!userid || !category || !description || !deadline || !priority) {
         console.warn("LOG: **MISSING DATA**: one or more todo properties missing");
         

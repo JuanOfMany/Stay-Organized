@@ -8,7 +8,6 @@
 <body>
     <nav id="navbar">
         <button type="button"><a href="./index.html">Home</a></button>
-        <button type="button"><a href="./complete_todo.html">Complete a Task</a></button>
         <button type="button"><a href="./new_user.html">New User</a></button>
         <button type="button"><a href="./todos.html">To Dos</a></button>
         <button type="button"><a href="./todo_details.html">To Do Details</a></button>
@@ -23,15 +22,15 @@
             <select id="category-select">
                 <option>Select a Category:</option>
             </select>
-            <input id="description" type="text" placeholder="Enter a Description">
-            <input id="deadline" type="date" placeholder="Enter a Deadline">
+            <input id="description-input" type="text" placeholder="Enter a Description">
+            <input id="deadline-input" type="date" placeholder="Enter a Deadline">
             <select>
                 <option>Pick a priority:</option>
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
             </select>
-            <button type="button">Add To Do</button>
+            <button type="button" id="new-todo-btn">Add To Do</button>
         </form>
     </div>
 

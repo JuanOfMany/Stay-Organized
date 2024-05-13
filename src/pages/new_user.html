@@ -8,12 +8,21 @@
 <body>
     <nav id="navbar">
         <button type="button"><a href="./index.html">Home</a></button>
-        <button type="button"><a href="./complete_todo.html">Complete a Task</a></button>
         <button type="button"><a href="./new_user.html">New User</a></button>
         <button type="button"><a href="./todos.html">To Dos</a></button>
         <button type="button"><a href="./todo_details.html">To Do Details</a></button>
         <button type="button"><a href="./new_todo.html">New To Do</a></button>
     </nav>
+    <div>
+        <h1>New User</h1>
+        <form>
+            <input type="text" id="name-input" placeholder="Enter your Name" required>
+            <input type="text" id="username-input" placeholder="Enter your Username" required>
+            <input type="text" id="password-input" placeholder="Enter your Password" required>
+            <input type="text" id="password-confirm-input" placeholder="Confirm your Password" required>
+            <button id="new-user-btn" type="button">Submit New User</button>
+        </form>
+    </div>
     <script src="../scripts/newUser.js"></script>
 </body>
 </html>

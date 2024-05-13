@@ -21,6 +21,9 @@ function showAllTodos(arrOfTodos) {
         for (let key in todo) {
             let newCell = newRow.insertCell()
             newCell.innerHTML = todo[key]
+            if (key === 'id') {
+                newCell.innerHTML = `<a href=./todo_details.html?id=${todo[key]}>${todo[key]}</a>`
+            }
         }
     })
 }
