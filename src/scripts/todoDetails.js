@@ -3,6 +3,9 @@
 function getTodoId() {
     let url = (window.location.href);
     let afterSlash = url.split('=')[1]
+    if (!afterSlash) {
+        return 10
+    }
     console.log(afterSlash)
     return afterSlash
 }
