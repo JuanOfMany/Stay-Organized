@@ -55,8 +55,8 @@ async function makeNewTodo() {
 }
 
 function addButtonListener() {
-    let button = document.getElementById('new-todo-btn')
-    button.addEventListener('click', makeNewTodo)
+    let form = document.getElementById('new-todo-form')
+    form.addEventListener('submit', makeNewTodo)
 }
 
 window.onload = () => {

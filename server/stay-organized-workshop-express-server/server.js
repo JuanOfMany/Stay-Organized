@@ -1,10 +1,31 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
-const path = require("path")
+const path = require("path");
+const OpenAI = require("openai");
+const axios = require('axios');
+require('dotenv').config();
+
+const openai = new OpenAI();
 
 const app = express();
 
+// FUNCTIONS:
+
+const download_image = (url, image_path) => {
+    axios({
+        url,
+        responseType: 'stream',
+    }).then(
+        response =>
+            new Promise((resolve, reject) => {
+                response.data
+                    .pipe(fs.createWriteStream(image_path))
+                    .on('finish', () => resolve())
+                    .on('error', e => reject(e));
+            }),
+    );
+}
 
 ///////////////////////////////////////////////////////////////////////
 //   MIDDLEWARE (CONFIGURATIONS) //////////////////////////////////////
@@ -20,14 +41,17 @@ app.use(express.urlencoded({ extended: false }));
 // Support application/json data
 app.use(express.json());
 
+
 // Serve static front-end files (HTML, etc.) from "./public"
 // app.use(express.static("public"));
 console.log(__dirname)
 
+app.use('/images', express.static('./images'))
+
 ///////////////////////////////////////////////////////////////////////
 //   API ENDPOINTS ////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-// app.get("/", function (request, response) {
+// app.get("/images", function (request, response) {
 //     response.sendFile( path.join( __dirname, './../../src', 'pages/todos.html' ));
 // })
 
@@ -182,18 +206,18 @@ app.get("/api/users/:username", function (request, response) {
     // If no matching user
     if (!matchingUser) {
         console.warn(`LOG: **NOT FOUND**: user ${username} does not exist!`);
-        
+
         response
             .status(404)
             .end();
-    
+
         return;
     }
 
     // Create a copy without the password
-    const userWithoutPassword = { 
-        id: matchingUser.id, 
-        name: matchingUser.name, 
+    const userWithoutPassword = {
+        id: matchingUser.id,
+        name: matchingUser.name,
         username: matchingUser.username,
     };
 
@@ -207,7 +231,7 @@ app.get("/api/users/:username", function (request, response) {
 
 
 // POST a new todo
-app.post("/api/todos", function (request, response) {
+app.post("/api/todos", async function (request, response) {
     console.info("LOG: Got a POST request to add a todo");
     console.info("LOG: Message body ->", JSON.stringify(request.body));
 
@@ -216,7 +240,7 @@ app.post("/api/todos", function (request, response) {
 
     if (!userid || !category || !description || !deadline || !priority) {
         console.warn("LOG: **MISSING DATA**: one or more todo properties missing");
-        
+
         response
             .status(400)
             .json({ error: "Missing data, can't process: one or more Todo properties missing." });
@@ -230,7 +254,14 @@ app.post("/api/todos", function (request, response) {
     // Get the id of this new todo
     const nextIdJson = fs.readFileSync(__dirname + "/data/next-ids.json", "utf8");
     const nextIdData = JSON.parse(nextIdJson);
-    
+
+    // Get image URL
+    const image = await openai.images.generate({ prompt: description });
+    let imageURL = image.data[0].url
+    let localImageURL = `./images/${description.replace(/ /g, "_")}.png`
+    download_image(imageURL, localImageURL);
+
+
     // Create the todo w/ new id and completed marked as false
     const todo = {
         id: nextIdData.nextTodoId,
@@ -240,8 +271,9 @@ app.post("/api/todos", function (request, response) {
         deadline: deadline,
         priority: priority,
         completed: false,
+        image: localImageURL
     };
-    
+
     nextIdData.nextTodoId += 1;
     fs.writeFileSync(__dirname + "/data/next-ids.json", JSON.stringify(nextIdData));
 
@@ -355,6 +387,24 @@ app.post("/api/users", function (request, response) {
         .status(201)
         .json(user);
 });
+
+app.post('/generate-image', async (req, res) => {
+    // let prompt = `A cute baby sea otter`
+    // let imagePath = `${prompt}`
+    // const image = await openai.images.generate({ prompt:  prompt});
+    // let imageURL = image.data[0].url
+    // console.log(imageURL);
+    // download_image(imageURL, `/images/${imagePath}`)
+
+    // res.send({
+    //     'URL': image.data
+    // })
+    res.send({
+        url: 'https://oaidalleapiprodscus.blob.core.windows.net/private/org-bXmVVLxWX5JM3mJpoTxWYDgH/user-fNCOCkn9V8ce0q0vbgMyKGrq/img-ZhYktYETFKRZPPPBQWr8FkRI.png?st=2024-05-15T17%3A33%3A38Z&se=2024-05-15T19%3A33%3A38Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2024-05-15T05%3A25%3A18Z&ske=2024-05-16T05%3A25%3A18Z&sks=b&skv=2021-08-06&sig=rLn5fK/AUmu/l94Z/S4%2BnY1OrXNiursS5lG%2BcAklrJ8%3D'
+    })
+});
+
+
 
 
 ///////////////////////////////////////////////////////////////////////

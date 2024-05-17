@@ -8,21 +8,31 @@ async function getUserTodos(userId) {
     return await fetch(`http://127.0.0.1:8083/api/todos/byuser/${userId}`).then((res) => res.json())
 }
 
-function showAllTodos(arrOfTodos) {
+function showTodos(arrOfTodos) {
     wipeRows();
     let table = document.getElementById('todo-table')
-    let headerRow = table.insertRow(0);
+    let head = document.createElement('thead');
+    table.appendChild(head)
+    let headerRow = head.insertRow(0);
     for (let header in arrOfTodos[0]) {
-        let newHeader = headerRow.insertCell();
-        newHeader.innerHTML = header;
+        if (header === "id" || header === "userid") {
+        } else {
+            let capitalizedHeader = header.charAt(0).toUpperCase() + header.slice(1);
+            headerRow.insertCell().outerHTML = `<th>${capitalizedHeader}</th>`
+        }
+
     }
     arrOfTodos.forEach((todo) => {
         let newRow = table.insertRow();
         for (let key in todo) {
-            let newCell = newRow.insertCell()
-            newCell.innerHTML = todo[key]
-            if (key === 'id') {
-                newCell.innerHTML = `<a href=./todo_details.html?id=${todo[key]}>${todo[key]}</a>`
+            if (key === "id" || key === "userid" || key === "image") {
+            } else {
+                let newCell = newRow.insertCell()
+                newCell.innerHTML = todo[key]
+                newCell.classList.add("text-wrap", "overflow-hidden")
+                if (key === 'description') {
+                    newCell.innerHTML = `<a href=./todo_details.html?id=${todo['id']}>${todo[key]}</a>`
+                }
             }
         }
     })
@@ -44,8 +54,15 @@ function showUserTodos(userId) {
         arrOfTodos.forEach((todo) => {
             let newRow = table.insertRow();
             for (let key in todo) {
-                let newCell = newRow.insertCell()
-                newCell.innerHTML = todo[key]
+                if (key === "id" || key === "userid" || key === "image") {
+                } else {
+                    let newCell = newRow.insertCell()
+                    newCell.innerHTML = todo[key]
+                    newCell.classList.add("text-wrap", "overflow-hidden")
+                    if (key === 'description') {
+                        newCell.innerHTML = `<a href=./todo_details.html?id=${todo['id']}>${todo[key]}</a>`
+                    }
+                }
             }
         })
     })
@@ -76,17 +93,17 @@ function populateSelect(arrOfTodos) {
 function findAllCompleted() {
     for (let td of document.querySelectorAll("td")) {
         if (td.textContent.includes("true")) {
-          td.innerHTML = "&#x2713;"
+            td.innerHTML = "&#x2713;"
         } else if (td.textContent.includes("false")) {
             td.innerHTML = "&#10060"
         }
-      }
+    }
 }
 
 window.onload = () => {
     getAllTodos().then((data) => {
         addSelectListener()
-        showAllTodos(data)
+        showTodos(data)
         populateSelect(data)
         findAllCompleted()
     })

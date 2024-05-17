@@ -9,12 +9,29 @@
 </head>
 
 <body>
-    <nav id="navbar">
-        <button type="button"><a href="./index.html">Home</a></button>
-        <button type="button"><a href="./new_user.html">New User</a></button>
-        <button type="button"><a href="./todos.html">To Dos</a></button>
-        <button type="button"><a href="./todo_details.html">To Do Details</a></button>
-        <button type="button"><a href="./new_todo.html">New To Do</a></button>
+    <nav id="navbar" role="navigation" class="navbar navbar-expand-lg bg-secondary navbar-dark" style="width:100vw">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="btn btn-secondary" href="./index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-secondary" href="./new_user.html">New User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-secondary" href="./todos.html">To Dos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-secondary" href="./todo_details.html">To Do Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-secondary" href="./new_todo.html">New To Do</a>
+                    </li>
+                </ul>
+        </div>
     </nav>
     <h1>To Do Details</h1>
     <div>
@@ -28,6 +45,8 @@
         <p id="description"></p>
         <h3>Completed</h3>
         <p id="completed"></p>
+        <h3>Image</h3>
+        <img id="image" class="img img-fluid"></img>
         <button type="button" id="complete-btn">Mark As Completed</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

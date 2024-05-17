@@ -16,8 +16,14 @@ async function getTodoInfo(todoId) {
 
 function populateTodoInfo(todo) {
     let keys = Object.keys(todo).slice(2)
+
     keys.forEach((key) => {
-      document.getElementById(key).innerHTML = todo[key]
+        let element = document.getElementById(key)
+        if(key === 'image') {
+            element.src = `http://127.0.0.1:8083/${todo[key]}`
+            return
+        }
+      element.innerHTML = todo[key]
     })
 }
 
