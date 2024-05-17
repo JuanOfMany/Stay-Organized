@@ -40,8 +40,8 @@ async function handleNewUserSubmit(event) {
 }
 
 function addButtonListener() {
-    let button = document.getElementById('new-user-btn')
-    button.addEventListener('click', handleNewUserSubmit)
+    let form = document.getElementById('new-user-form')
+    form.addEventListener('submit', handleNewUserSubmit)
 }
 
 function checkPasswordsMatch () {
@@ -72,6 +72,5 @@ async function nameAvailable() {
 }
 
 window.onload = () => {
-    console.log('hello world')
     addButtonListener()
 }
