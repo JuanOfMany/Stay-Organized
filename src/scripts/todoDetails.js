@@ -22,8 +22,15 @@ function populateTodoInfo(todo) {
         if(key === 'image') {
             element.src = `http://127.0.0.1:8083/${todo[key]}`
             return
+        } else if (key === "completed") {
+            if (todo[key]) {
+                element.innerHTML = "Yes, great job!" 
+            } else {
+                element.innerHTML = "Not yet, get on it!"
+            }
+        } else {
+            element.innerHTML = todo[key]
         }
-      element.innerHTML = todo[key]
     })
 }
 
