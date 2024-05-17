@@ -8,6 +8,23 @@ async function getUserTodos(userId) {
     return await fetch(`http://127.0.0.1:8083/api/todos/byuser/${userId}`).then((res) => res.json())
 }
 
+function formatDate(dateString) {
+    const dateParts = dateString.split('-');
+    const year = parseInt(dateParts[0], 10);
+    const month = parseInt(dateParts[1], 10) - 1;
+    const day = parseInt(dateParts[2], 10);
+    const date = new Date(year, month, day);
+
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+
+    const formattedDate = `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+
+    return formattedDate;
+}
+
 function showTodos(arrOfTodos) {
     wipeRows();
     let table = document.getElementById('todo-table')
@@ -26,7 +43,10 @@ function showTodos(arrOfTodos) {
         let newRow = table.insertRow();
         for (let key in todo) {
             if (key === "id" || key === "userid" || key === "image") {
-            } else {
+            } else if (key === 'deadline') {
+                let newCell = newRow.insertCell()
+                newCell.innerHTML = formatDate(todo[key]) 
+            } else{
                 let newCell = newRow.insertCell()
                 newCell.innerHTML = todo[key]
                 newCell.classList.add("text-wrap", "overflow-hidden")
@@ -55,6 +75,9 @@ function showUserTodos(userId) {
             let newRow = table.insertRow();
             for (let key in todo) {
                 if (key === "id" || key === "userid" || key === "image") {
+                } else if (key === "deadline") {
+                    let newCell = newRow.insertCell()
+                    newCell.innerHTML = formatDate(todo[key])
                 } else {
                     let newCell = newRow.insertCell()
                     newCell.innerHTML = todo[key]
